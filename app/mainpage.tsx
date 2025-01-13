@@ -1,38 +1,79 @@
-import React from "react";
+import { useEffect, useState, useRef } from 'react';
+import Image from 'next/image'; // Import Next.js Image component
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
+
+gsap.registerPlugin(ScrollTrigger); // Register ScrollTrigger
 
 const Jewelry = () => {
+  const [isMounted, setIsMounted] = useState(false); // Hydration fix
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   const jewelryCategories = [
     {
-      name: "Rings",
-      image: "https://img.freepik.com/free-photo/beautiful-engagement-ring-with-diamonds_23-2149509264.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid",
-      description: "Timeless and elegant rings designed to perfection.",
+      name: 'Rings',
+      image: 'https://img.freepik.com/free-photo/beautiful-engagement-ring-with-diamonds_23-2149509264.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid',
+      description: 'Timeless and elegant rings designed to perfection.',
     },
     {
-      name: "Necklaces",
-      image: "https://img.freepik.com/free-photo/bust-showcase-jewelry-display-necklace-pendant-jewelry-lifestyle-fashion-accessories-mockup_460848-14343.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid",
-      description: "Statement necklaces for unforgettable moments.",
+      name: 'Necklaces',
+      image: 'https://img.freepik.com/free-photo/bust-showcase-jewelry-display-necklace-pendant-jewelry-lifestyle-fashion-accessories-mockup_460848-14343.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid',
+      description: 'Statement necklaces for unforgettable moments.',
     },
     {
-      name: "Bracelets",
-      image: "https://img.freepik.com/free-photo/beautiful-young-woman-wearing-sari_23-2149502988.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid",
-      description: "Sophisticated bracelets to enhance your charm.",
+      name: 'Bracelets',
+      image: 'https://img.freepik.com/free-photo/beautiful-young-woman-wearing-sari_23-2149502988.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid',
+      description: 'Sophisticated bracelets to enhance your charm.',
     },
     {
-      name: "Earrings",
-      image: "https://img.freepik.com/free-photo/aesthetic-golden-earrings-high-angle_23-2149846562.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid",
-      description: "Dazzling earrings that complete any look.",
+      name: 'Earrings',
+      image: 'https://img.freepik.com/free-photo/aesthetic-golden-earrings-high-angle_23-2149846562.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid',
+      description: 'Dazzling earrings that complete any look.',
     },
     {
-      name: "Pendants",
-      image: "https://img.freepik.com/free-photo/bust-showcase-jewelry-display-necklace-pendant-jewelry-lifestyle-fashion-accessories-mockup_460848-14340.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid",
-      description: "Enchanting pendants for every occasion.",
+      name: 'Pendants',
+      image: 'https://img.freepik.com/free-photo/bust-showcase-jewelry-display-necklace-pendant-jewelry-lifestyle-fashion-accessories-mockup_460848-14340.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid',
+      description: 'Enchanting pendants for every occasion.',
     },
     {
-      name: "Bangles",
-      image: "https://img.freepik.com/free-photo/young-indian-woman-wearing-sari_23-2149400884.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid",
-      description: "Beautifully crafted bangles to suit your style.",
+      name: 'Bangles',
+      image: 'https://img.freepik.com/free-photo/young-indian-woman-wearing-sari_23-2149400884.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid',
+      description: 'Beautifully crafted bangles to suit your style.',
     },
   ];
+
+  // Hydration fix: Only set to true after the component mounts (client-side)
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted) {
+      // Loop through each card and apply scroll-triggered animations
+      cardRefs.current.forEach((card, index) => {
+        if (card) {
+          gsap.from(card, {
+            opacity: 0,
+            y: 100,
+            duration: 1,
+            delay: index * 0.3, // Delay each animation based on the index
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 90%', // Trigger when 90% of the card is visible
+              end: 'bottom 10%', // End the animation when the bottom of the card is 10% from the viewport
+              scrub: false, // No scrub, just trigger animation once
+              once: true, // Make sure the animation happens only once
+            },
+          });
+        }
+      });
+    }
+  }, [isMounted]);
+
+  if (!isMounted) {
+    return null; // Hydration fix: Ensure no rendering before the component is mounted
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -57,13 +98,19 @@ const Jewelry = () => {
             {jewelryCategories.map((category, index) => (
               <div
                 key={index}
+                ref={(el) => {
+                  cardRefs.current[index] = el; // Save reference to each card
+                }}
                 className="relative group overflow-hidden rounded-lg shadow-md border border-gray-200 bg-white"
               >
                 {/* Image */}
-                <img
+                <Image
                   src={category.image}
                   alt={category.name}
                   className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                  width={500} // Add width for Next.js Image optimization
+                  height={400} // Add height for Next.js Image optimization
+                  layout="responsive" // Makes the image responsive
                 />
 
                 {/* Content */}
@@ -83,14 +130,6 @@ const Jewelry = () => {
       </section>
 
       {/* Footer Section */}
-      <footer className="bg-gray-900 text-gray-300 py-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-sm">
-            © {new Date().getFullYear()} Suraj Abhushan Bhandar. All Rights
-            Reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };

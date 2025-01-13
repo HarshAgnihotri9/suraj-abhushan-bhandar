@@ -1,8 +1,9 @@
 "use client";
+import Footer from "./Components/footer";
 import Navbar from "./Components/Navbar";
+import Testimonials from "./Components/Testimonials";
+import TrendingPage from "./Components/trendingProducts";
 import Jewelry from "./mainpage";
-import JewelryPage from "./mainpage";
-
 export default function Home() {
   return (
     <>
@@ -43,7 +44,9 @@ export default function Home() {
         </div>
       </div>
       <Jewelry/>
-
+      <TrendingPage/>
+      <Testimonials/>
+      <Footer/>
       {/* Main Page Section */}
     </>
   );

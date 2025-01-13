@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link"; // Import Link from next/link
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -37,25 +38,25 @@ const Navbar = () => {
       <nav className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
         {/* Logo */}
         <div className="text-2xl font-bold text-white">
-          <a href="/" className="hover:text-gray-300">
+          <Link href="/" className="hover:text-gray-300">
             Suraj Abhushan Bhandar
-          </a>
+          </Link>
         </div>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8">
-          <a href="/" className="text-lg text-white hover:text-gray-300">
+          <Link href="/" className="text-lg text-white hover:text-gray-300">
             Home
-          </a>
-          <a href="#collections" className="text-lg text-white hover:text-gray-300">
+          </Link>
+          <Link href="#collections" className="text-lg text-white hover:text-gray-300">
             Collections
-          </a>
-          <a href="#about" className="text-lg text-white hover:text-gray-300">
+          </Link>
+          <Link href="#about" className="text-lg text-white hover:text-gray-300">
             About Us
-          </a>
-          <a href="#contact" className="text-lg text-white hover:text-gray-300">
+          </Link>
+          <Link href="#contact" className="text-lg text-white hover:text-gray-300">
             Contact
-          </a>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -88,34 +89,34 @@ const Navbar = () => {
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <a
+        <Link
           href="/"
           onClick={closeMobileMenu}
           className="hover:text-gray-300 transition duration-200"
         >
           Home
-        </a>
-        <a
+        </Link>
+        <Link
           href="#collections"
           onClick={closeMobileMenu}
           className="hover:text-gray-300 transition duration-200"
         >
           Collections
-        </a>
-        <a
+        </Link>
+        <Link
           href="#about"
           onClick={closeMobileMenu}
           className="hover:text-gray-300 transition duration-200"
         >
           About Us
-        </a>
-        <a
+        </Link>
+        <Link
           href="#contact"
           onClick={closeMobileMenu}
           className="hover:text-gray-300 transition duration-200"
         >
           Contact
-        </a>
+        </Link>
       </div>
     </header>
   );
