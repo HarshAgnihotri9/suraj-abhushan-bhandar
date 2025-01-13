@@ -11,6 +11,12 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        neonGreen: '#39FF14',
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        playfair: ['Playfair Display', 'serif'],
+        montserrat: ['Montserrat', 'sans-serif'],
       },
     },
   },
