@@ -27,7 +27,7 @@ const Jewelry = () => {
     },
     {
       name: 'Earrings',
-      image: 'https://img.freepik.com/free-photo/aesthetic-golden-earrings-high-angle_23-2149846562.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid',
+      image: 'https://img.freepik.com/premium-photo/women-s-earings_8408-3.jpg?ga=GA1.1.686101460.1735278394&semt=ais_hybrid',
       description: 'Dazzling earrings that complete any look.',
     },
     {
@@ -101,20 +101,22 @@ const Jewelry = () => {
                 ref={(el) => {
                   cardRefs.current[index] = el; // Save reference to each card
                 }}
-                className="relative group overflow-hidden rounded-lg shadow-md border border-gray-200 bg-white"
+                className="relative group overflow-hidden rounded-lg shadow-md border border-gray-200 bg-white flex flex-col"
               >
                 {/* Image */}
-                <Image
-                  src={category.image}
-                  alt={category.name}
-                  className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                  width={500} // Add width for Next.js Image optimization
-                  height={400} // Add height for Next.js Image optimization
-                  layout="responsive" // Makes the image responsive
-                />
+                <div className="w-full h-64 overflow-hidden relative">
+                  <Image
+                    src={category.image}
+                    alt={category.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    width={500} // Add width for Next.js Image optimization
+                    height={400} // Add height for Next.js Image optimization
+                    layout="responsive" // Makes the image responsive
+                  />
+                </div>
 
                 {/* Content */}
-                <div className="p-6">
+                <div className="p-6 flex flex-col justify-between flex-grow">
                   <h3 className="text-2xl font-bold text-gray-800">
                     {category.name}
                   </h3>
